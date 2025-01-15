@@ -1,0 +1,23 @@
+# As general practice
+# ignore the files that you didn't write 
+
+.venv/ 
+
+*.pyc 
+__pycache__/
+
+# Typically exclude instance folder from version control
+# Ensures: 1. sensitive data is kept out of the repo
+# 2. Deployment-specific configurations remain local to their environments
+instance/ 
+
+.pytest_cache/
+.coverage
+htmlcov/ 
+
+dist/
+build/
+*.egg-info/ 
+
+# Also exclude some older material 
+utils/

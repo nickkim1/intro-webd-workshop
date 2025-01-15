@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif; 
+}
+
+.title { 
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.task { 
+    display: flex; 
+    padding: 3px; 
+    margin: 5px auto;
+    justify-content: space-between; 
+    gap: 10px;
+    flex-wrap: wrap; 
+    max-width: 700px;
+    border: 1px solid black;
+}
+
+@media(max-width: 600px) { 
+    .task { 
+        flex-direction: column; 
+        flex-wrap: wrap;
+    }
+}
+
+/* Inline the task content i.e. the 
+checkbox and the task description */
+.task-content { 
+    display: flex;
+    margin-left: 20px;
+    height: 30px;
+    line-height: 30px;
+    /* flex: 1; 
+    white-space: normal;  */
+}
+
+.task-content input { 
+    min-width: 20px; 
+    min-height: 20px;
+}
+
+.task-description { 
+    margin-left: 20px; 
+    width: 300px;
+    text-wrap: wrap; 
+    word-wrap: break-word;
+}
+
+/* Inline the two forms for deleting and 
+editing (i.e. their buttons) */
+.task-options form { 
+    display: inline-block; 
+}
+
+.task-options button { 
+    padding: 5px; 
+    border-radius: 10px; 
+    text-align: center; 
+    color: white; 
+    background: gray;  
+    height: 30px; 
+    min-width: 75px; 
+    align-items: center;
+    text-wrap: nowrap; 
+    word-wrap: nowrap; 
+}
+
+.task-options .delete-button { 
+    background-color: red;
+}
+
+.task-options .edit-button { 
+    background-color: lightblue;
+}
+
+
+.add-task { 
+    text-align: center;
+}
+
+#task-description { 
+    width: 300px;
+    color: black;
+}
+
+/* Toggle this class when you click on the 
+edit window to hide/show the popup window */
+.edit-window.show { 
+    visibility: visible;
+}
+
+.edit-window { 
+    visibility: hidden;
+    z-index: 999; 
+    position: absolute;
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 10px; 
+}
+
+.edit-window .close-button { 
+    border-radius: 10px;
+    font-size: 10px; 
+    background-color: red;
+    color: white;
+    position: absolute;
+    top: 5px; 
+    right: 5px;
+}

@@ -21,3 +21,6 @@ build/
 
 # Also exclude some older material 
 utils/
+
+# Exclude repo solutions
+solutions/

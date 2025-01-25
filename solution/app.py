@@ -26,13 +26,11 @@ with app.app_context():
 # Basic error handling 
 @app.errorhandler(404)
 def page_not_found(error): 
-    # TODO: write the rest of this function, HINT: use render_template? 
-    pass 
+    return render_template('page_not_found.html'), 404 
 
 @app.errorhandler(401)
 def unauthorized(error): 
-    # TODO: write the rest of this function, HINT: use render_template? 
-    pass 
+    return render_template('unauthorized.html', 401)
 
 # Flask will look for templates in the 
 # templates/ folder by default. No need for additional specification. 
@@ -41,7 +39,9 @@ def index():
     tasks = db.session.query(Task).all()
     return render_template('index.html', tasks=tasks)
 
-@app.route("/add", methods=???)
+# Web applications use different HTTP methods when accessing URLs
+# in our case we're always going to be POSTing a new task, so POST request here. 
+@app.route("/add", methods=['POST'])
 def add():
     new_task = Task(
         description=request.form['task-description'],
@@ -51,24 +51,27 @@ def add():
     db.session.commit()
     return redirect('/')
 
-@app.route("/delete/<int:id>", methods=???)
+@app.route("/delete/<int:id>", methods=['POST'])
 def delete(id):
     task = db.get_or_404(Task, id)
     db.session.delete(task)
     db.session.commit()
     return redirect('/')
 
-@app.route("/edit/<int:id>", methods=???)
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id): 
-    if request.method == ???: 
+    if request.method == 'POST': 
+        print("This is the id we're posting on", id)
         task = db.session.get(Task, id)
-        # TODO: What should we do with this task? Hint: use the request object...is there something that 
-        # we can use to fetch form data? 
+        task.description = request.form['task-description']
         db.session.commit()
-    return redirect('/')
+        return redirect('/')
+    else: 
+        tasks = db.session.query(Task).all()
+        return redirect('/')
     
 # Persist 'checked' information across the requests. 
-@app.route("/checked/<int:id>", methods=???)
+@app.route("/checked/<int:id>", methods=["GET", "POST"])
 def checked(id):
     if request.method == 'POST': 
         task = db.session.get(Task, id)
@@ -78,9 +81,7 @@ def checked(id):
     return redirect('/')
 
 # ~ Running the Application ~ 
-# 
-# cd src/  
-# 
+#  
 # flask --app app run 
 # As a shortcut, since the app file is called app itself you 
 # can omit the app and just do flask app run

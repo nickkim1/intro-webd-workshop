@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    <title>Task Manager App</title>
+</head>
+<body>
+    <div class="title">Task Manager!</div>
+    <div class="task_manager">
+        <div class="tasks">
+            <ul class="tasks">
+                {% for task in tasks %}
+                    <li class="task">
+                        <!-- Checkbox & task content -->
+                        <div class="task-content">
+                            <input class="checkbox" type="checkbox" id="{{task.id}}" {% if task.completed %} checked {% endif %}>
+                            <div class="task-description">{{ task.description }}</div>
+                        </div>
+                        <!-- Delete and edit buttons -->
+                        <div class="task-options">
+                            <form action="{{ url_for('delete', id=task.id) }}" method="POST">
+                                <button class="delete-button" name="delete" value="delete" type="submit">Delete Task</button>
+                            </form>
+                            <button class="edit-button" id="{{task.id}}" name="edit" value="edit" type="submit" onclick="handleEdit('{{ task.id }}')">Edit Task</button>
+                        </div>
+                         <!-- Edit window popup -->
+                        <div class="edit-window" id="edit-window-{{task.id}}">
+                            <form id="{{task.id}}" class="edit-task" action="{{ url_for('edit', id=task.id) }}" method="POST">
+                                <label for="task-description">Edit Task:</label>
+                                <input type="text" name="task-description" id="task-description" placeholder="Insert task description...">
+                                <input type="submit">
+                            </form>
+                            <button type="text" class="close-button" name="close-button" value="close-button" onclick="handleEdit('{{ task.id }}')">X</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- Adding task option -->
+        <div class="add-task"> 
+            <form class="add-task-form" action="{{ url_for('add') }}" method="POST">
+                <label for="task-description">Add New Task:</label>
+                <input type="text" id="task-description" name="task-description" placeholder="Insert task description...">
+                <input type="submit">
+            </form> 
+        </div>
+    </div>
+    <script>
+        // Omitted JS Code here for the sake of demoing static content
+    </script>
+</body>
+</html>
